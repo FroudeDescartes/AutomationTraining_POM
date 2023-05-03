@@ -11,7 +11,6 @@ test.describe('Inventory page', () => {
     });
 
     //header
-
     test('Home page title', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
         await InventoryPg.validateHomePageTitle()
@@ -23,54 +22,60 @@ test.describe('Inventory page', () => {
     });
 
     //inventory
-    test('Add to cart by serial number', async ({ page }) => {
-        const InventoryPg = new InventoryPage(page)
-        await InventoryPg.itemToCartBySerialNumber()
-    });
-
-    test('Add to cart by name', async ({ page }) => {
-        const InventoryPg = new InventoryPage(page)
-        await InventoryPg.itemToCartByName()
-    });
-
-    test('Add random item to cart', async ({ page }) => {
-        const InventoryPg = new InventoryPage(page)
-        await InventoryPg.randomItemToCart()
-    });
-
-    test('Remove from cart via Inventory page', async ({ page }) => {
-        const InventoryPg = new InventoryPage(page)
-        await InventoryPg.itemToCartBySerialNumber()
-        await InventoryPg.removeItemsViaInventoryPg()
-    });
-
     test('Inventory list', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
         await InventoryPg.validateInventoryList()
     });
 
-    test('Filter search Z to A', async ({ page }) => {
+    test('Add all items to cart by serial number', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
-        await InventoryPg.filterSearchOptionZToA()
-        await InventoryPg.validateActiveFilterZToA()
+        await InventoryPg.addAllItemsToCartBySerialNumber()
     });
 
-    test('Filter search A to Z', async ({ page }) => {
+    test('Add item to cart by serial number', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
-        await InventoryPg.filterSearchOptionAToZ()
-        await InventoryPg.validateActiveFilterAToZ()
+        await InventoryPg.addItemToCartBySerialNumber(3)
     });
 
-    test('Filter search High price to Low price', async ({ page }) => {
+    test('Add item to cart by name', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
-        await InventoryPg.filterSearchOptionHighToLow()
-        await InventoryPg.validateActiveFilterHighToLow()
+        await InventoryPg.addItemToCartByName("Sauce Labs Bike Light")
     });
 
-    test('Filter search Low price to High price', async ({ page }) => {
+    test('Add random item to cart', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
-        await InventoryPg.filterSearchOptionLowToHigh()
-        await InventoryPg.validateActiveFilterLowToHigh()
+        await InventoryPg.addRandomItemToCart()
+    });
+
+    test('Remove from cart via Inventory page', async ({ page }) => {
+        const InventoryPg = new InventoryPage(page)
+        await InventoryPg.addAllItemsToCartBySerialNumber()
+        await InventoryPg.removeItemsViaInventoryPg()
+        await InventoryPg.validateRemovedItemsViaInventoryPage()
+    });
+
+    test('Filter search', async ({ page }) => {
+        const InventoryPg = new InventoryPage(page)
+        await InventoryPg.filterSearchOptions('za')
+        await InventoryPg.validateActiveFilter("Test.allTheThings() T-Shirt (Red)")
+
+        await InventoryPg.filterSearchOptions('az')
+        await InventoryPg.validateActiveFilter("Sauce Labs Backpack")
+
+        await InventoryPg.filterSearchOptions('hilo')
+        await InventoryPg.validateActiveFilter("$49.99")
+
+        await InventoryPg.filterSearchOptions('lohi')
+        await InventoryPg.validateActiveFilter("$7.99")
+
+        /*
+        optionValue = {
+            "Name (Z to A)": 'za',
+            "Name (A to Z)": 'az',
+            "Price (High to Low)": 'hilo',
+            "Price (Low to High)": 'lohi'
+        }
+        */
     });
 
     //footer
