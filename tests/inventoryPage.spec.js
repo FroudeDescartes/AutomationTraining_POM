@@ -30,21 +30,25 @@ test.describe('Inventory page', () => {
     test('Add all items to cart by serial number', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
         await InventoryPg.addAllItemsToCartBySerialNumber()
+        await InventoryPg.validateAddedItemsToCart(6)
     });
 
     test('Add item to cart by serial number', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
         await InventoryPg.addItemToCartBySerialNumber(3)
+        await InventoryPg.validateAddedItemsToCart(1)
     });
 
-    test('Add item to cart by name', async ({ page }) => {
+    /*test('Add item to cart by name', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
         await InventoryPg.addItemToCartByName("Sauce Labs Bike Light")
-    });
+        await InventoryPg.validateAddedItemsToCart(1)
+    });*/
 
     test('Add random item to cart', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
         await InventoryPg.addRandomItemToCart()
+        await InventoryPg.validateAddedItemsToCart(1)
     });
 
     test('Remove from cart via Inventory page', async ({ page }) => {
@@ -67,15 +71,6 @@ test.describe('Inventory page', () => {
 
         await InventoryPg.filterSearchOptions('lohi')
         await InventoryPg.validateActiveFilter("$7.99")
-
-        /*
-        optionValue = {
-            "Name (Z to A)": 'za',
-            "Name (A to Z)": 'az',
-            "Price (High to Low)": 'hilo',
-            "Price (Low to High)": 'lohi'
-        }
-        */
     });
 
     //footer

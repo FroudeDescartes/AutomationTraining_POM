@@ -12,6 +12,7 @@ class InventoryPage {
         this.inventoryItemDescription = page.locator(".inventory_item_description")
         this.inventoryAddToCartButton = page.locator(".inventory_item button")
         this.inventoryRemoveFromCartButton = page.locator(".inventory_item button")
+        this.shoppingCartBadge = page.locator(".shopping_cart_badge")
         this.footerLinkTwitter = page.locator(".social_twitter")
         this.footerLinkFacebook = page.locator(".social_facebook")
         this.footerLinkLinkedIn = page.locator(".social_linkedin")
@@ -42,7 +43,7 @@ class InventoryPage {
         await expect(this.inventoryItemDescription.nth(0)).toContainText(validationValue)
     }
 
-    //add items to cart
+    //add items to cart and assert it
     async addAllItemsToCartBySerialNumber() {
         let itemCount = await this.inventoryItem.count()
         for (let i = 0; i < itemCount; i++) {
@@ -55,7 +56,8 @@ class InventoryPage {
     }
 
     async addItemToCartByName(itemName) {
-        await this.inventoryAddToCartButton.getByText(itemName)
+        await this.page.pause()
+        await this.inventoryAddToCartButton.getByText(itemName)//problem!
     }
 
     async addRandomItemToCart() {
@@ -64,9 +66,10 @@ class InventoryPage {
         await this.inventoryAddToCartButton.nth(randomItemNumber).click()
     }
 
-    //random item to cart assertion
-    async validateAddRandomItemToCart() {
-
+    async validateAddedItemsToCart(numberOfItems) {
+        let itemsInCart = await this.shoppingCartBadge.innerHTML()
+        let itemsInCartNum = parseInt(itemsInCart)
+        expect(itemsInCartNum).toEqual(numberOfItems)
     }
 
     //remove items from cart via inventory page
