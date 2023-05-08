@@ -39,11 +39,11 @@ test.describe('Inventory page', () => {
         await InventoryPg.validateAddedItemsToCart(1)
     });
 
-    /*test('Add item to cart by name', async ({ page }) => {
+    test('Add item to cart by name', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)
         await InventoryPg.addItemToCartByName("Sauce Labs Bike Light")
         await InventoryPg.validateAddedItemsToCart(1)
-    });*/
+    });
 
     test('Add random item to cart', async ({ page }) => {
         const InventoryPg = new InventoryPage(page)

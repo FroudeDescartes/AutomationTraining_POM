@@ -10,6 +10,7 @@ class InventoryPage {
         this.inventoryList = page.locator(".inventory_list")
         this.inventoryItem = page.locator(".inventory_item")
         this.inventoryItemDescription = page.locator(".inventory_item_description")
+        this.pdpButton = page.locator(".inventory_details_desc_container button")
         this.inventoryAddToCartButton = page.locator(".inventory_item button")
         this.inventoryRemoveFromCartButton = page.locator(".inventory_item button")
         this.shoppingCartBadge = page.locator(".shopping_cart_badge")
@@ -56,8 +57,8 @@ class InventoryPage {
     }
 
     async addItemToCartByName(itemName) {
-        await this.page.pause()
-        await this.inventoryAddToCartButton.getByText(itemName)//problem!
+        await this.inventoryList.getByText(itemName).click()
+        await this.pdpButton.click()
     }
 
     async addRandomItemToCart() {
